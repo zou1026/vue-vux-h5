@@ -1,4 +1,4 @@
-import fetch from '@/utils/fetch'
+import fetch from '../utils/fetch'
 
 //分散式房源获取房间列表
 export function getRoomList(data) {
