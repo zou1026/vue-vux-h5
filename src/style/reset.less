@@ -1,0 +1,92 @@
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+
+a{
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+    }
+}
+
+ul,ol,li{list-style:none}
+
+input,button,textarea{
+    border: 0;
+    outline: none;
+}
+
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+
+@orange:#FE7437;
+@blue:#0084FF;
+@green:#71B54F;
+@mainColor:#29bba8;
+@aux-bgc: #f5f5f5;
+@base-color: #1fb6b5;
+@base-aux-color: #e5f3f3;
+@aux-h5: #bbb;
+.subtitle (@size: 12px, @height: 17px, @weight: 100) {
+    margin: 0;
+    font-size: @size;
+    line-height: @height;
+    font-weight: @weight;
+}
+.btn-base (@size: 15px, @height: 20px, @weight: 200,@width:100%) {
+    width: @width;
+    height: 50px;
+    outline: none;
+    border: none;
+    background: @base-color;
+    color: #FFF;
+    .subtitle(@size, @height, @weight);
+}
+.title (@size: 18px, @height: 25px) {
+    margin: 0;
+    font-size: @size;
+    line-height: @height;
+}
+.pad(@size:30px){
+    padding:0 @size;
+}
+
+.elips(@line:1){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @line;
+}
+.flex (@justify: flex-start, @align: center, @direction: row) {
+    display: flex;
+    flex-direction: @direction;
+    justify-content: @justify;
+    align-items: @align;
+}
+.grey{
+    color: #999;
+}
+.orange{
+    color: #FE7437
+}
+.green{
+    color: #71B54F;
+}
+
+.container{
+    min-width: 100vw;
+    min-height: 100vh;
+    padding-bottom: 100px;
+    position: relative;
+    background-color: #fff;
+}
+.container-btm{
+    min-width: 100vw;
+    min-height: 100vh;
+    position: relative;
+    background-color: #fff;
+}
