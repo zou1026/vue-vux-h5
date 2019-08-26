@@ -76,7 +76,7 @@ export default {
         console.log(res)
         if(res.code !== '0000'){
           this.showPositionValue = true;
-          this.toastText = "登录失败";
+          this.toastText =res.msg;
         }
         this.$store.dispatch("saveUserInfo", res.data); //本地存储用户信息
         sessionStorage.setItem("user_token", res.data.token); //当前会话存储token
