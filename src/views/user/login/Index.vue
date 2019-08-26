@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { login ,wechatsLogin} from "@/api/loginApi";
 export default {
   data() {
     return {
@@ -40,16 +41,56 @@ export default {
       openId: this.$route.query.openId
     };
   },
+   created() {
+    let user_info = JSON.parse(localStorage.getItem("user_info") || "{}");
+    if (user_info.login_name) {
+      this.phone = user_info.login_name;
+    }
+    // this.password = sessionStorage.getItem("pwd");
+    this.init()
+  },
   methods: {
+     init(){
+          let token=sessionStorage.getItem('user_token') || localStorage.getItem('user_token')
+          if(token!=null&&token!=""){
+              this.$router.push("/")
+          }
+          // this.GetUrlParame('code')
+      },
     forgetPassword() {
       this.$router.push({ path: "/user/resetPwd" });
     },
+    // submit() {
+    //   let _this = this;
+    //   console.log("dneglu");
+    //   this.showPositionValue = true;
+    //   this.toastText = "登录失败";
+    // }
     submit() {
-      let _this = this;
-      console.log("dneglu");
-      this.showPositionValue = true;
-      this.toastText = "登录失败";
-    }
+      let data = {
+        login_name: this.account,
+        password: this.password,
+        openId:this.openId
+      };
+      login(data).then(res => {
+        console.log(res)
+        if(res.code !== '0000'){
+          this.showPositionValue = true;
+          this.toastText = "登录失败";
+        }
+        this.$store.dispatch("saveUserInfo", res.data); //本地存储用户信息
+        sessionStorage.setItem("user_token", res.data.token); //当前会话存储token
+        // if (this.value) {
+        //   //自动登录
+        //   this.$store.dispatch("saveUserToken", res.data); //token本地存储
+        //   // sessionStorage.setItem("pwd", this.password);
+        // } else {
+        // }
+        localStorage.removeItem('location_name')
+        localStorage.removeItem('unit_id')
+        this.$router.push({ path: "/" });
+      });
+    },
   }
 };
 </script>
