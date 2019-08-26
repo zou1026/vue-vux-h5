@@ -28,6 +28,8 @@ const webpackConfig = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'styles': resolve('src/assets/styles'),
+      'common': resolve('src/common'),
     }
   },
   module: {
@@ -83,5 +85,8 @@ const webpackConfig = {
 }
 
 module.exports = vuxLoader.merge(webpackConfig, {
-  plugins: ['vux-ui']
+  plugins: ['vux-ui',{
+    name: 'less-theme',
+    path: 'src/style/theme.less'
+  }]
 })

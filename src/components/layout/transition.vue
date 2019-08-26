@@ -23,8 +23,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.fold-enter-active {
-    animation:fold-in 0.3s;
+
+.fold-enter,.fold-enter-active {
+    // animation:fold-in 0.3s;
     opacity: 1;
 }
 .fold-leave-active {

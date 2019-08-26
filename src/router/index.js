@@ -1,7 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import Index from '@/views/index'
+// 路由Layout组件
+import Layout from '@/components/layout/transition.vue'
+// 首页
+import Home from '@/views/home/Index.vue'
+// 用户相关
+import Login from '@/views/user/login/Index.vue'
+// import Forget from '@/views/user/forget/Index.vue'
+import Setting from '@/views/user/setting/Index.vue'
+import ResetPwd from '@/views/user/reset/Index.vue'
+
+//消息列表
+import MessageList from '@/views/message/Index'
+
+
 
 Vue.use(Router)
 
@@ -15,12 +28,30 @@ Router.prototype.goBack = function (val) {
 }
 
 const router =  new Router({
+  // mode: 'history',
+  // base: '/zoushiyang/',
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: Index,
-    }
+      name: 'Home',
+      component: Home,
+    },{
+      path: '/user',//用户信息
+      component: Layout,
+      children: [
+          { path: 'login', component: Login },
+          // { path: 'forget', component: Forget },
+          { path: 'setting', component: Setting },
+          { path: 'resetPwd', component: ResetPwd }
+      ]
+    },{
+      path: '/message',//消息
+      component: Layout,
+      children: [
+          { path: 'list', component: MessageList},
+
+      ]
+  }
   ]
 })
 
