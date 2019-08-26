@@ -1,7 +1,5 @@
 import axios from 'axios'
-//import MD5 from 'md5'
 import CryptoJS from 'crypto-js'
-import qs from 'qs'
 import router from "../router";
 
 // 实例化 Axios

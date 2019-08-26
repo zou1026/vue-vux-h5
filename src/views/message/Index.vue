@@ -30,7 +30,7 @@
                   <p class="text1">住户111111</p>
                   <p class="text2">什么什么山山水水是sacked</p>
                 </div>
-                <div v-if="!u_isRead" class="notice"></div>
+                <!-- <div v-if="!u_isRead" class="notice"></div> -->
               </span>
               <span>
                 <p class="time">2019-07-01 14:12:56</p>
