@@ -107,6 +107,7 @@ export default {
 
       input {
         width: 90%;
+        border: none;
       }
     }
 
@@ -116,6 +117,7 @@ export default {
 
       input {
         width: 64%;
+        border: none;
       }
 
       .right-part {
