@@ -64,7 +64,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import url('~styles/reset');
+@import url('../../style/reset');
 .c-nav{
     background-color: @mainColor!important;
     color: #fff!important;
