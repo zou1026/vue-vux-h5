@@ -146,26 +146,27 @@ export default {
     position: relative;
     z-index: 999;
     .loc-res{
-        padding-top: 30px;
-        height: 98px;
+        padding-top: 15px;
+        height: 59px;
         background-color: @mainColor;
         color: #fff;
-        font-size: 30px;
+        font-size: 15px;
         .flex();
         .loc-icon{
             display: inline-block;
-            width: 24px;
-            height: 32px;
+            width: 12px;
+            height: 16px;
             background:url('../../assets/icon_mark@2x.png');
-            margin-left: 24px;
-            margin-right: 10px;
+            background-size: 12px 16px;
+            margin-left: 12px;
+            margin-right: 5px;
             vertical-align: middle;
         }   
     }
     .loc-list{
         position: absolute;
         width: 100%;
-        height: 382px;
+        height: 191px;
         top: 98px;
         background-color: #fff;
         ul{ 
@@ -176,9 +177,9 @@ export default {
             width: 25%;
             li{
                 text-align: center;
-                font-size: 30px;
+                font-size: 15px;
                 .elips();
-                margin: 20px 10px;
+                margin: 10px 5px;
                 color: #333;
                 &.active{
                     color: @mainColor;

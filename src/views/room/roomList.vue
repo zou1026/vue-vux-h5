@@ -1,6 +1,6 @@
 <template>
     <div class="container-btm">
-        <Nav title="房间管理"></Nav>
+         <x-header :left-options="{backText: ''}" title="房间管理" style="background: #29bba8;" ></x-header>
         <select-community @getRoomListData="getRoomListData"></select-community>
         <div class="room-count">
             <div class="item" v-for="(item,index) in roomState" :key="item.name" @click="chooseRoom(index,item.status)"  :class="{active:isActive==index}">
@@ -73,8 +73,8 @@ export default {
 .room-count{
     background-color: @mainColor;
     color: #fff;
-    font-size: 30px;
-    height: 160px;
+    font-size: 15px;
+    height: 80px;
     display: flex;
     .item{
         position: relative;
@@ -87,7 +87,7 @@ export default {
             left: 50%;
             width: 0;
             height: 0;
-            border-width: 10px;
+            border-width: 5px;
             border-style: solid;
             border-color: transparent transparent #fff;
         }
@@ -95,25 +95,25 @@ export default {
 }
 
 .show-des{
-    line-height: 88px;
+    line-height: 44px;
     border-bottom: 1px solid #ddd;
-    font-size: 30px;
+    font-size: 15px;
     color: #666;
     text-align: right;
-    padding: 0 50px;
+    padding: 0 25px;
     .title{
         float: left;
     }
     span{
-        margin-left: 30px;
+        margin-left: 15px;
         &::before{
             content: "";
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 5px;
+            height: 5px;
             vertical-align: middle;
-            border-radius: 10px;
-            margin-right: 10px;
+            border-radius: 5px;
+            margin-right: 5px;
         }
         &.free::before{
             background-color: @mainColor;
@@ -127,6 +127,14 @@ export default {
     }
 
 }
-
+/deep/.vux-header .vux-header-title{
+    font-size: 15px;
+    color: #fff;
+}
+// /deep/.vux-header .vux-header-left .left-arrow:before {
+//     width: 7px;
+//     height: 12px;
+//     background-size: 7px 12px;
+// }
 </style>
 
