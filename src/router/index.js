@@ -14,8 +14,10 @@ import ResetPwd from '@/views/user/reset/Index.vue'
 //消息列表
 import MessageList from '@/views/message/Index'
 
-
-
+// 房间相关
+// 集中式
+import Room from '@/views/room'
+import RoomList from '@/views/room/roomList'
 Vue.use(Router)
 
 Router.prototype.goBack = function (val) {
@@ -51,7 +53,17 @@ const router =  new Router({
           { path: 'list', component: MessageList},
 
       ]
-  }
+  },
+  {
+    path: '/room',
+    component: Router,
+    redirect: '/room/list',
+    children: [
+        { path: 'list', component: RoomList },
+        // { path: 'detail/:id', component: RoomDetail },
+        // { path: 'tertiaryDetail', component: TertiaryRoomDetail },
+    ]
+},
   ]
 })
 
