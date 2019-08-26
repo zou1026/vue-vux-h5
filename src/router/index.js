@@ -56,7 +56,7 @@ const router =  new Router({
   },
   {
     path: '/room',
-    component: Router,
+    component: Layout,
     redirect: '/room/list',
     children: [
         { path: 'list', component: RoomList },
