@@ -45,15 +45,15 @@ export default {
 
 .floor{
     border-bottom: 1px solid #ddd;
-    padding: 0 50px;
+    padding: 0 25px;
     .title{
-        line-height: 88px;
-        font-size: 30px;
+        line-height: 44px;
+        font-size: 15px;
         color: black;
         .flex(space-between);
         i{
-            width: 13px;
-            height: 9px;
+            width: 6px;
+            height: 4px;
             background: url("../../assets/zhangkai2@2x.png");
             transition: all .5s;
             &.up{
@@ -64,23 +64,23 @@ export default {
     .house{
         overflow: hidden;
         display: inline-block;
-        padding-top: 20px;
+        padding-top: 10px;
         .house-resouce{
-            line-height: 88px;
-            font-size: 24px;
-            padding-left: 30px;
+            line-height: 44px;
+            font-size: 12px;
+            padding-left: 15px;
         }
         .room{
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             text-align: center;
-            line-height: 100px;
+            line-height: 50px;
             border-radius: 50%;
             color: #fff;
-            font-size: 24px;
+            font-size: 12px;
             float: left;
-            margin-right: 50px;
-            margin-bottom: 50px;
+            margin-right: 25px;
+            margin-bottom: 25px;
 
         }
         .free{
