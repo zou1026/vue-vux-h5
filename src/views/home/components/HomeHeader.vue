@@ -2,11 +2,11 @@
   <div class="header">
     <div class="header-top">
       <div class="row">
-        <p class="user-name">{{ueseName}}</p>
-        <p class="user-type">社区运营官</p>
+        <p class="user-name">{{`你好，${user_info.name}`}}</p>
+        <p class="user-type" v-for="(item,index) in user_info.roles" :key="index" v-show="index===0">{{item.name}}</p>
       </div>
       <router-link to="/user/setting" tag="div" class="avatar">    
-        <img src="http://static.inzhiyu.com/FqT5AmxkrdMzn-7qCk5iy89GWtC1?imageslim" alt />
+        <img :src="user_info.avatar|imgConnect" >
       </router-link>
     </div>
     <div class="header-bottom">
@@ -34,14 +34,34 @@
 export default {
   data() {
     return {
-      ueseName: "你好,欢迎您ovu"
+      user_info: null
     };
+  },
+  created() {
+    this.isLogin();
+    this.getStore();
   },
   methods: {
     userLogout() {
       window.localStorage.clear();
       window.sessionStorage.clear();
-      this.$router.push({ path: "/user/login" });
+      this.$router.push({ path: "/user/login"});
+    },
+    getStore() {
+      if (window.localStorage.getItem("user_info")) {
+        this.user_info = JSON.parse(localStorage.getItem("user_info"));
+        console.log('1111'+this.user_info.name);
+      } else {
+        this.$router.push("/user/login");
+      }
+    },
+    isLogin() {
+      if (
+        !localStorage.getItem("user_token") &&
+        !sessionStorage.getItem("user_token")
+      ) {
+        this.$router.push("/user/login");
+      }
     }
   }
 };
@@ -94,7 +114,7 @@ export default {
   .header-bottom {
     display: flex;
     justify-content: space-between;
-    padding-top: 30px;
+    padding-top: 25px;
     .row {
       .icon {
         padding: 5px 0px;

@@ -145,6 +145,7 @@ export default {
 
       .right-part {
         color: #1fb6b5;
+        background: #fff;
       }
     }
     .btn-login {

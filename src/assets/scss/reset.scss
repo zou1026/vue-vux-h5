@@ -9,3 +9,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 a { text-decoration: none; color: #666; }
 a:hover, a:active {outline: none;}
 input[type="text"], textarea { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+textarea{overflow:auto;resize:vertical}
+input,textarea,button,select,a{outline:0 none;border: none;}
+button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0;background-color: #fff}

@@ -7,8 +7,6 @@
           <span class="iconfont">&#xe682;</span>
           <input maxlength="11" v-model="phone" placeholder="请输入手机号" />
           <div class="code">
-
-        
             <button v-if="isActive ==0" class="right-part" @click="getCode">获取验证码</button>
             <button class="right-part" v-else-if="isActive ==1">{{`已发送(${number}s)`}}</button>
             <button class="right-part" v-else="isActive == 2" @click="getCode">重新发送验证码</button>
@@ -24,7 +22,7 @@
         </div>
         <div class="c-input border-bottom">
           <span class="iconfont">&#xe850;</span>
-          <input type="password" v-model="oldPwd" placeholder="再次输入新密码" />
+          <input type="password" v-model="cfmPwd" placeholder="再次输入新密码" />
         </div>
         <x-button @click.native="submit" class="btn-login" type="primary">确认修改</x-button>
       </div>
@@ -32,25 +30,25 @@
     <toast
       v-model="showPositionValue"
       type="text"
-      :time="1000"
+      :time="2000"
       is-show-mask
       :text="toastText"
       :position="position"
     ></toast>
   </div>
 </template>
-
 <script>
+import {getCaptcha,resetPwd} from '@/api/setting'
 export default {
   data() {
     return {
       phone:'',
       code: "",
       newPwd: "",
-      oldPwd: "",
-      number: "",
+      cfmPwd: "",
       isActive: 0,
       number: 60,
+      // toast
       showPositionValue: false, //是否显示提示
       position: "middle", //提示信息的位置
       toastText: "" // 提示文本
@@ -58,39 +56,83 @@ export default {
   },
   methods: {
     getCode() {
-      this.showPositionValue = true;
-      this.toastText = "正在获取验证码";
-      this.isActive = 1;
-      let tick = setInterval(() => {
-        this.number = this.number - 1;
-        if (this.number === 0) {
-          window.clearInterval(tick);
-          this.number = 60;
-          this.isActive = 2;
+      if(!this.phone || !(/^1[34578]\d{9}$/.test(this.phone))){
+        this.showPositionValue = true;
+        this.toastText = '请输入合法的手机号';
+        return
+      }
+      getCaptcha({phone:this.phone}).then(res=>{
+        if(res.code==='0000'){
+          console.log('获取成功')
+          this.showPositionValue = true;
+          this.toastText = "验证码已发送";
+          this.isActive = 1;
+          let tick = setInterval(() => {
+            this.number = this.number - 1;
+            if (this.number === 0) {
+              window.clearInterval(tick);
+              this.number = 60;
+              this.isActive = 2;
+            }
+          }, 1000);
+        }else{
+            this.showPositionValue = true;
+            this.toastText = res.msg;
         }
-      }, 1000);
+      })
+      
     },
     submit() {
-    //   let _this = this;
-      console.log("dneglu");
-    //   this.showPositionValue = true;
-    //   this.toastText = "修改失败";
-        this.$vux.confirm.show({
-            title: '确定修改',
-            content: '是否真的要修改?',
-            onShow () {
-            console.log('plugin show')
-            },
-            onHide () {
-            console.log('plugin hide')
-            },
-            onCancel () {
-            console.log('plugin cancel')
-            },
-            onConfirm () {
-            console.log('plugin confirm')
+  //   let _this = this;
+      if(!this.phone || !(/^1[34578]\d{9}$/.test(this.phone))){
+        this.showPositionValue = true;
+        this.toastText = '请输入合法的手机号';
+        return
+      }
+      if(!this.code){
+        this.showPositionValue = true;
+        this.toastText = '请输入验证码';
+        return
+      }
+      if(!this.newPwd){
+        this.showPositionValue = true;
+        this.toastText = '新密码不能为空';
+        return
+      }
+      if(!this.cfmPwd){
+        this.showPositionValue = true;
+        this.toastText = '确认新密码不能为空';
+        return
+      }
+      if(this.newPwd !== this.cfmPwd){
+        this.showPositionValue = true;
+        this.toastText = '密码输入不一致';
+        return
+      }
+      this.$vux.confirm.show({
+        title: '提示',
+        content: '是否确定修改?',
+        onCancel () {
+        console.log('取消')
+        },
+        onConfirm () {
+          resetPwd({
+            phone:this.phone,
+            captcha:this.code,
+            new_pwd:this.newPwd,
+            confirm_pwd:this.cfmPwd
+          }).then(res=>{
+            if(res.code === '0000'){
+              localStorage.clear();
+              sessionStorage.clear();
+              this.$router.push({ path: "/" });
+            }else{
+              this.showPositionValue = true;
+              this.toastText = res.msg;
             }
-        })
+          })
+        }
+      })
     }
   }
 };
@@ -112,9 +154,9 @@ export default {
        text-align right 
        .right-part {
           color: #1fb6b5;
+          background-color :#fff
           }
         }
-      
     }
     .c-input {
       height: 60px;

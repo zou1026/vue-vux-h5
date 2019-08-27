@@ -39,20 +39,17 @@ export default {
   },
   methods: {
     userLogout() {
-      this.$vux.confirm.show({
-        title: "退出",
-        content: "是否确实退出登录?",
-        onShow() {
-          console.log("plugin show");
-        },
-        onHide() {
-          console.log("plugin hide");
-        },
+      let _this=this;
+      _this.$vux.confirm.show({
+        title: "提示",
+        content: "是否确定退出登录?",
         onCancel() {
-          console.log("plugin cancel");
+          console.log("取消");
         },
         onConfirm() {
-          console.log("plugin confirm");
+          window.localStorage.clear();
+          window.sessionStorage.clear();
+          _this.$router.push({ path: "/user/login" });
         }
       });
     }
