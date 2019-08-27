@@ -34,10 +34,6 @@ const router =  new Router({
   // base: '/zoushiyang/',
   routes: [
     {
-      path: '/',
-      name: 'Home',
-      component: Home,
-    },{
       path: '/user',//用户信息
       component: Layout,
       children: [
@@ -46,7 +42,13 @@ const router =  new Router({
           { path: 'setting', component: Setting },
           { path: 'resetPwd', component: ResetPwd }
       ]
-    },{
+    },
+    {
+      path: '/',
+      name: 'Home',
+      component: Home,
+    },
+    {
       path: '/message',//消息
       component: Layout,
       children: [

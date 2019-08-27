@@ -40,6 +40,7 @@ export default {
   methods: {
     userLogout() {
       window.localStorage.clear();
+      window.sessionStorage.clear();
       this.$router.push({ path: "/user/login" });
     }
   }

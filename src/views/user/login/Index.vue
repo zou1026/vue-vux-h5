@@ -18,7 +18,7 @@
     <toast
       v-model="showPositionValue"
       type="text"
-      :time="1000"
+      :time="2000"
       is-show-mask
       :text="toastText"
       :position="position"
@@ -33,8 +33,7 @@ export default {
     return {
       account: "",
       password: "",
-      // phone: 'admin',
-      // password: '123456ovu',
+      // toast弹框配置
       showPositionValue: false, //是否显示提示
       position: "middle", //提示信息的位置
       toastText: "", // 提示文本
@@ -44,28 +43,58 @@ export default {
    created() {
     let user_info = JSON.parse(localStorage.getItem("user_info") || "{}");
     if (user_info.login_name) {
-      this.phone = user_info.login_name;
+      this.account = user_info.login_name;
     }
-    // this.password = sessionStorage.getItem("pwd");
     this.init()
   },
   methods: {
-     init(){
-          let token=sessionStorage.getItem('user_token') || localStorage.getItem('user_token')
-          if(token!=null&&token!=""){
-              this.$router.push("/")
-          }
-          // this.GetUrlParame('code')
-      },
+    init(){
+        let token=sessionStorage.getItem('user_token') || localStorage.getItem('user_token')
+        if(token!=null&&token!=""){
+            this.$router.push("/")
+        }
+        // this.GetUrlParame('code')
+    },
+    GetUrlParame (parameName) {
+      console.log(window.location.href)
+      var url = location.search;
+      console.log(this.getParam("code"));
+      console.log(this.getParam("redirectUrl"));
+      if (url.indexOf(parameName) != -1) {
+        wechatsLogin({code:this.getParam("code")}).then(res=>{
+              let openId = res.data.openId
+            if(openId){
+                this.openId = openId
+                console.log('有openid' + JSON.stringify(openId))
+            }else{
+                console.log('mei 有openid' )
+                if(res.code !== '0000'){
+                    Toast({
+                        message: res.msg,
+                        position: 'middle'
+                    });
+                    return
+                }
+                this.$store.dispatch("saveUserInfo", res.data); //本地存储用户信息
+                sessionStorage.setItem("user_token", res.data.token); //当前会话存储token
+                localStorage.removeItem('location_name')
+                localStorage.removeItem('unit_id')
+                this.$router.push({ path: this.getParam("redirectUrl")?this.getParam("redirectUrl"):"/" });
+            }
+        })
+      }
+    },
+    getParam(paramName) {
+        let paramValue = "", isFound = !1;
+        if (window.location.search.indexOf("?") == 0 && window.location.search.indexOf("=") > 1) {
+            let arrSource = unescape(window.location.search).substring(1, window.location.search.length).split("&"), i = 0;
+            while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+        }
+        return paramValue == "" && (paramValue = null), paramValue
+    },
     forgetPassword() {
       this.$router.push({ path: "/user/resetPwd" });
     },
-    // submit() {
-    //   let _this = this;
-    //   console.log("dneglu");
-    //   this.showPositionValue = true;
-    //   this.toastText = "登录失败";
-    // }
     submit() {
       let data = {
         login_name: this.account,
@@ -80,12 +109,6 @@ export default {
         }
         this.$store.dispatch("saveUserInfo", res.data); //本地存储用户信息
         sessionStorage.setItem("user_token", res.data.token); //当前会话存储token
-        // if (this.value) {
-        //   //自动登录
-        //   this.$store.dispatch("saveUserToken", res.data); //token本地存储
-        //   // sessionStorage.setItem("pwd", this.password);
-        // } else {
-        // }
         localStorage.removeItem('location_name')
         localStorage.removeItem('unit_id')
         this.$router.push({ path: "/" });
