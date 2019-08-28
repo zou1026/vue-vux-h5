@@ -50,16 +50,13 @@ export default {
     getStore() {
       if (window.localStorage.getItem("user_info")) {
         this.user_info = JSON.parse(localStorage.getItem("user_info"));
-        console.log('1111'+this.user_info.name);
+        // console.log('1111'+this.user_info.name);
       } else {
         this.$router.push("/user/login");
       }
     },
     isLogin() {
-      if (
-        !localStorage.getItem("user_token") &&
-        !sessionStorage.getItem("user_token")
-      ) {
+      if (!localStorage.getItem("user_token")&&!sessionStorage.getItem("user_token")){
         this.$router.push("/user/login");
       }
     }

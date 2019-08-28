@@ -16,3 +16,17 @@ export function resetPwd(data) {
         data
     })
 }
+export function getUpToken (data) {
+    return fetch({
+      url: 'portal/qiniu/getUpToken',
+      method: 'post',
+      data
+    })
+}
+export function updateImg (data) {
+    return fetch({
+      url: 'user/update',
+      method: 'post',
+      data
+    });
+}

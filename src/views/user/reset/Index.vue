@@ -83,33 +83,33 @@ export default {
       
     },
     submit() {
-  //   let _this = this;
-      if(!this.phone || !(/^1[34578]\d{9}$/.test(this.phone))){
-        this.showPositionValue = true;
-        this.toastText = '请输入合法的手机号';
+      let _this = this;
+      if(!_this .phone || !(/^1[34578]\d{9}$/.test(_this.phone))){
+        _this.showPositionValue = true;
+        _this.toastText = '请输入合法的手机号';
         return
       }
-      if(!this.code){
-        this.showPositionValue = true;
-        this.toastText = '请输入验证码';
+      if(!_this.code){
+        _this.showPositionValue = true;
+        _this.toastText = '请输入验证码';
         return
       }
-      if(!this.newPwd){
-        this.showPositionValue = true;
-        this.toastText = '新密码不能为空';
+      if(!_this.newPwd){
+        _this.showPositionValue = true;
+        _this.toastText = '新密码不能为空';
         return
       }
-      if(!this.cfmPwd){
-        this.showPositionValue = true;
-        this.toastText = '确认新密码不能为空';
+      if(!_this.cfmPwd){
+        _this.showPositionValue = true;
+        _this.toastText = '确认新密码不能为空';
         return
       }
-      if(this.newPwd !== this.cfmPwd){
-        this.showPositionValue = true;
-        this.toastText = '密码输入不一致';
+      if(_this.newPwd !== _this.cfmPwd){
+        _this.showPositionValue = true;
+        _this.toastText = '密码输入不一致';
         return
       }
-      this.$vux.confirm.show({
+      _this.$vux.confirm.show({
         title: '提示',
         content: '是否确定修改?',
         onCancel () {
@@ -117,18 +117,18 @@ export default {
         },
         onConfirm () {
           resetPwd({
-            phone:this.phone,
-            captcha:this.code,
-            new_pwd:this.newPwd,
-            confirm_pwd:this.cfmPwd
+            phone:_this.phone,
+            captcha:_this.code,
+            new_pwd:_this.newPwd,
+            confirm_pwd:_this.cfmPwd
           }).then(res=>{
             if(res.code === '0000'){
               localStorage.clear();
               sessionStorage.clear();
-              this.$router.push({ path: "/" });
+              _this.$router.push({ path: "/" });
             }else{
-              this.showPositionValue = true;
-              this.toastText = res.msg;
+              _this.showPositionValue = true;
+              _this.toastText = res.msg;
             }
           })
         }

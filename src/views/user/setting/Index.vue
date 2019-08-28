@@ -6,7 +6,7 @@
         <div class="photo">
           <a class="update-photo" @click="getToken">
             <img
-              :src="img_path"
+              :src="img_path|imgConnect"
               alt="暂无头像"
               onerror="this.src='http://static.inzhiyu.com/defaultimage.jpg'"
             />
@@ -14,7 +14,7 @@
           </a>
         </div>
         <div class="nickname">{{name}}</div>
-        <div class="rolename">{{rolename}}</div>
+        <div class="rolename">{{position}}</div>
       </div>
       <div class="l-control">
         <!-- <router-link :to="{path:'/'}" class="control-item setPas">重置密码</router-link> -->
@@ -29,27 +29,66 @@
 </template>
 
 <script>
+import {updateImg,getUpToken} from '@/api/setting'
+import Axios from "axios";
 export default {
   data() {
     return {
-      name: "ovu",
-      rolename: "社区运营官",
-      img_path: ""
+      name: undefined,
+      img_path: undefined,
+      position: undefined,
+      qiniuToken: undefined
     };
   },
+  created() {
+    this.getUser();
+    this.getToken();
+  },
   methods: {
+    getUser() {
+      let data = JSON.parse(localStorage.getItem("user_info"));
+      this.name = data.name;
+      this.img_path = data.avatar;
+      this.position = data.roles[0].name;
+    },
+     getToken() {
+      getUpToken({}).then(res=>{
+        this.qiniuToken = res.data.uptoken;
+      })
+    },
+    upload(e) {
+      let img = e.target.files[0];
+      let data = new FormData();
+      data.append("token", this.qiniuToken);
+      data.append("file", img);
+      Axios({
+        method: "post",
+        url: "https://upload.qiniup.com/",
+        data
+      }).then(res => {
+        this.img_path = res.data.key;
+        let data = {
+          img_path: this.img_path,
+          name: this.name
+        };
+        updateImg(data).then(res => {
+          console.log(res);
+          localStorage.setItem("user_info", JSON.stringify(res.data));
+        });
+      });
+    },
     userLogout() {
-      let _this=this;
-      _this.$vux.confirm.show({
+      // let _this=this;
+      this.$vux.confirm.show({
         title: "提示",
         content: "是否确定退出登录?",
-        onCancel() {
+        onCancel:()=>{
           console.log("取消");
         },
-        onConfirm() {
+        onConfirm:()=>{
           window.localStorage.clear();
           window.sessionStorage.clear();
-          _this.$router.push({ path: "/user/login" });
+          this.$router.push({ path: "/user/login" });
         }
       });
     }
