@@ -40,20 +40,13 @@ export default {
       openId: this.$route.query.openId
     };
   },
-   created() {
-    let user_info = JSON.parse(localStorage.getItem("user_info") || "{}");
-    if (user_info.login_name) {
-      this.account = user_info.login_name;
-    }
-    this.init()
-  },
   methods: {
     init(){
-        let token=sessionStorage.getItem('user_token') || localStorage.getItem('user_token')
-        if(token!=null&&token!=""){
-            this.$router.push("/")
-        }
-        // this.GetUrlParame('code')
+      let token=sessionStorage.getItem('user_token') || localStorage.getItem('user_token')
+      if(token!=null&&token!=""){
+          this.$router.push("/")
+      }
+      this.GetUrlParame('code')
     },
     GetUrlParame (parameName) {
       console.log(window.location.href)
@@ -67,7 +60,7 @@ export default {
                 this.openId = openId
                 console.log('有openid' + JSON.stringify(openId))
             }else{
-                console.log('mei 有openid' )
+                console.log('没有openid' )
                 if(res.code !== '0000'){
                     Toast({
                         message: res.msg,
@@ -114,7 +107,14 @@ export default {
         this.$router.push({ path: "/" });
       });
     },
-  }
+  },
+  created() {
+    let user_info = JSON.parse(localStorage.getItem("user_info") || "{}");
+    if (user_info.login_name) {
+      this.account = user_info.login_name;
+    }
+    this.init()
+  },
 };
 </script>
 <style lang="stylus" scoped>

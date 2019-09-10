@@ -148,7 +148,7 @@ export default {
   content: "";
   width: 22px;
   height: 22px;
-  // background: url("../../../assets/user/icon-camera.png") no-repeat;
+  background: url("../../../assets/user/icon-camera.png") no-repeat;
   background-size: 100% 100%;
   z-index: 3;
 }
