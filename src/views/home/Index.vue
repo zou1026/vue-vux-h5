@@ -1,20 +1,20 @@
 <template>
-    <div class="">
-        <home-header></home-header>
-        <home-list></home-list>
+    <div class="main">
+       开箱即用
     </div>
 </template>
 
 <script>
-import HomeHeader from './components/HomeHeader'
-import HomeList from './components/HomeList'
 export default {
   name: 'Index',
   components: {
-    HomeHeader,
-    HomeList,
   }
 }
 </script>
 <style lang="stylus" scoped>
+  .main
+    margin :0 auto;
+    margin-top:200px;
+    font-size :50px;
+    text-align center
 </style>

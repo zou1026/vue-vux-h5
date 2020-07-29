@@ -4,10 +4,8 @@ import router from "../router";
 
 // 实例化 Axios
 const Axios = axios.create({
-    // baseURL: 'http://test.fanjianhome.com/ovulive/employee/',
-    // baseURL:'https://api.fanjianhome.com/ovulive/employee/',
     baseURL: process.env.BASE_API,
-    tiemout: 20 * 1000,
+    timeout: 20 * 1000,
     headers: {}
 })
 
